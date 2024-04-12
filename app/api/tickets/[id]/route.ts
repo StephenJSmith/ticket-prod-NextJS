@@ -1,4 +1,3 @@
-import { Delete } from './../../../../node_modules/@types/mdast/index.d';
 import prisma from "@/prisma/db";
 import { ticketSchema } from "@/validationSchemas/ticket";
 import { NextRequest, NextResponse } from "next/server";
