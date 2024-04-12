@@ -15,8 +15,10 @@ const ViewTicket = async ({params}: Props) => {
     </p>
   }
 
+  const users = await prisma.user.findMany();
+
   return (
-    <TicketDetail ticket={ticket} />
+    <TicketDetail ticket={ticket} users={users} />
   )
 }
 export default ViewTicket
