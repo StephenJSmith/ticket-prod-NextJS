@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const MainNavLinks = ({ role }: { role?: string }) => {
   const links = [
     { label: "Dashboard", href: "/", adminOnly: false },
-    { label: "Tickets", href: "/itckets", adminOnly: false },
+    { label: "Tickets", href: "/tickets", adminOnly: false },
     { label: "Users", href: "/users", adminOnly: true },
   ];
 
