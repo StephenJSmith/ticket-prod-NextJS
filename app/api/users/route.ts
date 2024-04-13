@@ -1,9 +1,21 @@
 import prisma from "@/prisma/db";
 import { userSchema } from "@/validationSchemas/user";
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
+import { getServerSession } from "next-auth";
+import options from "../auth/[...nextauth]/options";
 
 export async function POST(request: NextRequest) {
+  const session = await getServerSession(options);
+
+  if (!session) {
+    return NextResponse.json({ error: "NOT authenticated" }, { status: 401 });
+  }
+
+  if (session.user.role !== "ADMIN") {
+    return NextResponse.json({ error: "NOT Admin" }, { status: 401 });
+  }
+
   const body = await request.json();
   const validation = userSchema.safeParse(body);
 
@@ -18,7 +30,10 @@ export async function POST(request: NextRequest) {
   });
 
   if (duplicate) {
-    return NextResponse.json({message: 'Duplicate Username'}, { status: 409 })
+    return NextResponse.json(
+      { message: "Duplicate Username" },
+      { status: 409 }
+    );
   }
 
   const hashPassword = await bcrypt.hash(body.password, 10);
